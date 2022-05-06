@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
 
 void main() {
+  Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -48,7 +51,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with UiLoggy {
   int _counter = 0;
 
   void _incrementCounter() {
