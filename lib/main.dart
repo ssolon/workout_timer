@@ -8,6 +8,8 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
+final counterProvider = StateProvider<int>((ref) => 0);
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Workout Timer',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerWidget with UiLoggy {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -48,25 +50,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> with UiLoggy {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -77,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> with UiLoggy {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -98,22 +82,52 @@ class _MyHomePageState extends State<MyHomePage> with UiLoggy {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
+          children: const <Widget>[
+            Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            CounterDisplayWidget(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomSheet: Row(children: [
+        Expanded(
+            child: TextButton(
+                style: _commandButtonStyle(context, Colors.red),
+                onPressed: () => ref.read(counterProvider.notifier).state--,
+                child: const Text('-'))),
+        Expanded(
+            child: TextButton(
+                style: _commandButtonStyle(context, Colors.yellow),
+                onPressed: () => ref.refresh(counterProvider),
+                child: const Text('Clear'))),
+        Expanded(
+            child: TextButton(
+                style: _commandButtonStyle(context, Colors.green),
+                onPressed: () => ref.read(counterProvider.notifier).state++,
+                child: const Text('+'))),
+      ]),
+    );
+  }
+
+  ButtonStyle _commandButtonStyle(BuildContext context, Color color) {
+    return TextButton.styleFrom(
+        primary: Colors.black,
+        backgroundColor: color,
+        textStyle: Theme.of(context).textTheme.headlineSmall);
+  }
+}
+
+class CounterDisplayWidget extends ConsumerWidget {
+  const CounterDisplayWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final counter = ref.watch(counterProvider);
+
+    return Text(
+      counter.toString(),
+      style: Theme.of(context).textTheme.headline4,
     );
   }
 }
