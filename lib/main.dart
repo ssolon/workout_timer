@@ -59,7 +59,7 @@ class TimerNotifier extends StateNotifier<TimerState> with UiLoggy {
     if (status == TimerStatus.running) {
       pause();
     }
-    current = Duration();
+    current = Duration.zero;
     state = _currentState();
   }
 
@@ -186,8 +186,44 @@ class CounterDisplayWidget extends ConsumerWidget {
     final timer = ref.watch(timerNotifierProvider);
 
     return Text(
-      timer.current.toString(),
+      formatDuration(timer.current),
       style: Theme.of(context).textTheme.headline2,
     );
   }
+}
+
+/// A general format for duration which doesn't display leading zeros.
+String formatDuration(Duration duration) {
+  final days = duration.inDays;
+  final lessDays = duration - Duration(days: days);
+
+  final hours = lessDays.inHours;
+  final lessHours = lessDays - Duration(hours: hours);
+
+  final minutes = lessHours.inMinutes;
+  final lessMinutes = lessHours - Duration(minutes: minutes);
+
+  final seconds = lessMinutes.inSeconds;
+  final lessSeconds = lessMinutes - Duration(seconds: seconds);
+
+  final millis = lessSeconds.inMilliseconds;
+
+  String result = millis > 0 ? ".$millis" : "";
+  if (hours > 0 || minutes > 0) {
+    result = seconds.toString().padLeft(2, '0') + result;
+  } else {
+    result = seconds.toString() + result;
+  }
+
+  if (hours > 0) {
+    result = hours.toString() +
+        ':' +
+        minutes.toString().padLeft(2, '0') +
+        ':' +
+        result;
+  } else if (minutes > 0) {
+    result = minutes.toString() + ':' + result;
+  }
+
+  return result;
 }
