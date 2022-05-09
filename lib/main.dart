@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,7 +10,65 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
+enum TimerStatus { stopped, running }
+
+@immutable
+class TimerState {
+  final TimerStatus status;
+  final Duration current;
+
+  const TimerState({required this.status, required this.current});
+
+  TimerState copyWith({TimerStatus? status, Duration? current}) {
+    return TimerState(
+        status: status ?? this.status, current: current ?? this.current);
+  }
+}
+
+class TimerNotifier extends StateNotifier<TimerState> with UiLoggy {
+  TimerNotifier([this.tick = const Duration(seconds: 1)])
+      : super(
+            const TimerState(status: TimerStatus.stopped, current: Duration()));
+
+  TimerStatus status = TimerStatus.stopped;
+  Duration tick;
+
+  Duration current = const Duration();
+  StreamSubscription<int>? _tickerSubscription;
+
+  void start() {
+    if (status == TimerStatus.stopped) {
+      status = TimerStatus.running;
+      final started = current;
+      _tickerSubscription = Stream.periodic(tick, (i) => i).listen((event) {
+        current = started + tick * event;
+        state = _currentState();
+      });
+    }
+  }
+
+  void pause() async {
+    if (status == TimerStatus.running) {
+      status = TimerStatus.stopped;
+      _tickerSubscription?.cancel();
+      state = _currentState();
+    }
+  }
+
+  void reset() {
+    if (status == TimerStatus.running) {
+      pause();
+    }
+    current = Duration();
+    state = _currentState();
+  }
+
+  _currentState() => TimerState(current: current, status: status);
+}
+
 final counterProvider = StateProvider<int>((ref) => 0);
+final timerNotifierProvider =
+    StateNotifierProvider<TimerNotifier, TimerState>((ref) => TimerNotifier());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -83,9 +143,6 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
             CounterDisplayWidget(),
           ],
         ),
@@ -94,17 +151,20 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
         Expanded(
             child: TextButton(
                 style: _commandButtonStyle(context, Colors.red),
-                onPressed: () => ref.read(counterProvider.notifier).state--,
+                onPressed: () =>
+                    ref.read(timerNotifierProvider.notifier).pause(),
                 child: const Text('-'))),
         Expanded(
             child: TextButton(
                 style: _commandButtonStyle(context, Colors.yellow),
-                onPressed: () => ref.refresh(counterProvider),
-                child: const Text('Clear'))),
+                onPressed: () =>
+                    ref.read(timerNotifierProvider.notifier).reset(),
+                child: const Text('Reset'))),
         Expanded(
             child: TextButton(
                 style: _commandButtonStyle(context, Colors.green),
-                onPressed: () => ref.read(counterProvider.notifier).state++,
+                onPressed: () =>
+                    ref.read(timerNotifierProvider.notifier).start(),
                 child: const Text('+'))),
       ]),
     );
@@ -123,11 +183,11 @@ class CounterDisplayWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counter = ref.watch(counterProvider);
+    final timer = ref.watch(timerNotifierProvider);
 
     return Text(
-      counter.toString(),
-      style: Theme.of(context).textTheme.headline4,
+      timer.current.toString(),
+      style: Theme.of(context).textTheme.headline2,
     );
   }
 }
