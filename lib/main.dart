@@ -134,27 +134,45 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
           ],
         ),
       ),
-      bottomSheet: Row(children: [
-        Expanded(
-            child: TextButton(
-                style: _commandButtonStyle(context, Colors.red),
-                onPressed: () =>
-                    ref.read(timerNotifierProvider.notifier).pause(),
-                child: const Text('-'))),
-        Expanded(
-            child: TextButton(
-                style: _commandButtonStyle(context, Colors.yellow),
-                onPressed: () =>
-                    ref.read(timerNotifierProvider.notifier).reset(),
-                child: const Text('Reset'))),
-        Expanded(
-            child: TextButton(
-                style: _commandButtonStyle(context, Colors.green),
-                onPressed: () =>
-                    ref.read(timerNotifierProvider.notifier).start(),
-                child: const Text('+'))),
-      ]),
+      bottomSheet: const BottomSheetWidget(),
     );
+  }
+}
+
+class BottomSheetWidget extends ConsumerWidget with UiLoggy {
+  const BottomSheetWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status =
+        ref.watch(timerNotifierProvider.select((value) => value.status));
+    final running = status == TimerStatus.running;
+
+    loggy.debug("BottomSheet running=$running");
+
+    return Row(children: [
+      Expanded(
+          child: TextButton(
+              style: _commandButtonStyle(
+                  context, running ? Colors.red : Colors.grey),
+              onPressed: status == TimerStatus.running
+                  ? () => ref.read(timerNotifierProvider.notifier).pause()
+                  : null,
+              child: const Text('-'))),
+      Expanded(
+          child: TextButton(
+              style: _commandButtonStyle(context, Colors.yellow),
+              onPressed: () => ref.read(timerNotifierProvider.notifier).reset(),
+              child: const Text('Reset'))),
+      Expanded(
+          child: TextButton(
+              style: _commandButtonStyle(
+                  context, running ? Colors.grey : Colors.green),
+              onPressed: status == TimerStatus.stopped
+                  ? () => ref.read(timerNotifierProvider.notifier).start()
+                  : null,
+              child: const Text('+'))),
+    ]);
   }
 
   ButtonStyle _commandButtonStyle(BuildContext context, Color color) {
@@ -165,13 +183,13 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
   }
 }
 
-class TimerDisplayWidget extends ConsumerWidget {
+class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
   const TimerDisplayWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timer = ref.watch(timerNotifierProvider);
-
+    loggy.debug("status=${timer.status}");
     return Text(
       formatDuration(timer.current),
       style: Theme.of(context).textTheme.headline2,
