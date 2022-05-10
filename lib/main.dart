@@ -153,20 +153,23 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
           child: ElevatedButton(
               style: _commandButtonStyle(
                   context, running ? Colors.red : Colors.grey),
-              onPressed: status == TimerStatus.running
+              onPressed: running
                   ? () => ref.read(timerNotifierProvider.notifier).pause()
                   : null,
               child: const Text('-'))),
       Expanded(
           child: ElevatedButton(
-              style: _commandButtonStyle(context, Colors.yellow),
-              onPressed: () => ref.read(timerNotifierProvider.notifier).reset(),
+              style: _commandButtonStyle(
+                  context, running ? Colors.grey : Colors.yellow),
+              onPressed: !running
+                  ? () => ref.read(timerNotifierProvider.notifier).reset()
+                  : null,
               child: const Text('Reset'))),
       Expanded(
           child: ElevatedButton(
               style: _commandButtonStyle(
                   context, running ? Colors.grey : Colors.green),
-              onPressed: status == TimerStatus.stopped
+              onPressed: !running
                   ? () => ref.read(timerNotifierProvider.notifier).start()
                   : null,
               child: const Text('+'))),
