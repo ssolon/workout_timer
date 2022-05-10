@@ -67,7 +67,14 @@ class TimerNotifier extends StateNotifier<TimerState> with UiLoggy {
 }
 
 final timerNotifierProvider =
-    StateNotifierProvider<TimerNotifier, TimerState>((ref) => TimerNotifier());
+    StateNotifierProvider.autoDispose<TimerNotifier, TimerState>((ref) {
+  final notifier = TimerNotifier();
+
+  /// We need to cleanup the timer. Should we have a separte 'dispose'?
+  ref.onDispose(() => notifier.reset());
+
+  return notifier;
+});
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
