@@ -68,7 +68,7 @@ class TimerNotifier extends StateNotifier<TimerState> with UiLoggy {
 
 final timerNotifierProvider =
     StateNotifierProvider.autoDispose<TimerNotifier, TimerState>((ref) {
-  final notifier = TimerNotifier();
+  final notifier = TimerNotifier(const Duration(milliseconds: 100));
 
   /// We need to cleanup the timer. Should we have a separte 'dispose'?
   ref.onDispose(() => notifier.reset());
@@ -197,7 +197,9 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
 }
 
 /// A general format for duration which doesn't display leading zeros.
-String formatDuration(Duration duration) {
+String formatDuration(
+  Duration duration,
+) {
   final days = duration.inDays;
   final lessDays = duration - Duration(days: days);
 
@@ -210,9 +212,9 @@ String formatDuration(Duration duration) {
   final seconds = lessMinutes.inSeconds;
   final lessSeconds = lessMinutes - Duration(seconds: seconds);
 
-  final millis = lessSeconds.inMilliseconds;
+  final tenths = (lessSeconds.inMilliseconds / 100).round();
 
-  String result = millis > 0 ? ".$millis" : "";
+  String result = ".$tenths";
   if (hours > 0 || minutes > 0) {
     result = seconds.toString().padLeft(2, '0') + result;
   } else {
