@@ -148,11 +148,9 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
         ref.watch(timerNotifierProvider.select((value) => value.status));
     final running = status == TimerStatus.running;
 
-    loggy.debug("BottomSheet running=$running");
-
     return Row(children: [
       Expanded(
-          child: TextButton(
+          child: ElevatedButton(
               style: _commandButtonStyle(
                   context, running ? Colors.red : Colors.grey),
               onPressed: status == TimerStatus.running
@@ -160,12 +158,12 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                   : null,
               child: const Text('-'))),
       Expanded(
-          child: TextButton(
+          child: ElevatedButton(
               style: _commandButtonStyle(context, Colors.yellow),
               onPressed: () => ref.read(timerNotifierProvider.notifier).reset(),
               child: const Text('Reset'))),
       Expanded(
-          child: TextButton(
+          child: ElevatedButton(
               style: _commandButtonStyle(
                   context, running ? Colors.grey : Colors.green),
               onPressed: status == TimerStatus.stopped
@@ -175,11 +173,12 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
     ]);
   }
 
-  ButtonStyle _commandButtonStyle(BuildContext context, Color color) {
-    return TextButton.styleFrom(
-        primary: Colors.black,
-        backgroundColor: color,
-        textStyle: Theme.of(context).textTheme.headlineSmall);
+  _commandButtonStyle(BuildContext context, Color color) {
+    return ButtonStyle(
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+        backgroundColor: MaterialStateProperty.all<Color>(color),
+        textStyle: MaterialStateProperty.all<TextStyle>(
+            Theme.of(context).textTheme.headlineSmall!));
   }
 }
 
@@ -188,10 +187,10 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timer = ref.watch(timerNotifierProvider);
-    loggy.debug("status=${timer.status}");
+    final state = ref.watch(timerNotifierProvider);
+
     return Text(
-      formatDuration(timer.current),
+      formatDuration(state.current),
       style: Theme.of(context).textTheme.headline2,
     );
   }
