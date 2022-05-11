@@ -150,29 +150,38 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
 
     return Row(children: [
       Expanded(
-          child: ElevatedButton(
-              style: _commandButtonStyle(
-                  context, running ? Colors.red : Colors.grey),
-              onPressed: running
-                  ? () => ref.read(timerNotifierProvider.notifier).pause()
-                  : null,
-              child: const Text('-'))),
+          child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ElevatedButton(
+            style: _commandButtonStyle(
+                context, running ? Colors.red : Colors.grey),
+            onPressed: running
+                ? () => ref.read(timerNotifierProvider.notifier).pause()
+                : null,
+            child: const Text('-')),
+      )),
       Expanded(
-          child: ElevatedButton(
-              style: _commandButtonStyle(
-                  context, running ? Colors.grey : Colors.yellow),
-              onPressed: !running
-                  ? () => ref.read(timerNotifierProvider.notifier).reset()
-                  : null,
-              child: const Text('Reset'))),
+          child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ElevatedButton(
+            style: _commandButtonStyle(
+                context, running ? Colors.grey : Colors.yellow),
+            onPressed: !running
+                ? () => ref.read(timerNotifierProvider.notifier).reset()
+                : null,
+            child: const Text('Reset')),
+      )),
       Expanded(
-          child: ElevatedButton(
-              style: _commandButtonStyle(
-                  context, running ? Colors.grey : Colors.green),
-              onPressed: !running
-                  ? () => ref.read(timerNotifierProvider.notifier).start()
-                  : null,
-              child: const Text('+'))),
+          child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ElevatedButton(
+            style: _commandButtonStyle(
+                context, running ? Colors.grey : Colors.green),
+            onPressed: !running
+                ? () => ref.read(timerNotifierProvider.notifier).start()
+                : null,
+            child: const Text('+')),
+      )),
     ]);
   }
 
