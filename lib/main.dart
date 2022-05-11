@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
+import 'package:workout_timer/views/beep_config.dart';
 
 void main() {
   Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
@@ -70,7 +71,7 @@ final timerNotifierProvider =
     StateNotifierProvider.autoDispose<TimerNotifier, TimerState>((ref) {
   final notifier = TimerNotifier(const Duration(milliseconds: 100));
 
-  /// We need to cleanup the timer. Should we have a separte 'dispose'?
+  // We need to cleanup the timer. Should we have a separate 'dispose'?
   ref.onDispose(() => notifier.reset());
 
   return notifier;
@@ -95,15 +96,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends ConsumerWidget with UiLoggy {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -114,25 +106,45 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
       ),
       body: Center(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
             TimerDisplayWidget(),
           ],
         ),
+      ),
+      drawer: Drawer(
+        child: ListView(children: [
+          const DrawerHeader(
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Text('Settings',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                )),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text('Default',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                        ),
+                        const IconButton(
+                          onPressed: null,
+                          icon: Icon(Icons.save),
+                        ),
+                      ],
+                    ),
+                    BeepConfigurationWidget()
+                  ]),
+            ),
+          ),
+        ]),
       ),
       bottomSheet: const BottomSheetWidget(),
     );
