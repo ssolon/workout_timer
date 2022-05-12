@@ -28,7 +28,7 @@ void main() {
       await tester.pump();
 
       // Verify that our timer has incremented.
-      expect(find.text('0'), findsNothing);
+      expect(find.text('0.0'), findsNothing);
 
       // expect(find.text('1'), findsOneWidget);
     });

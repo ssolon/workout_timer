@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
+import 'package:soundpool/soundpool.dart';
 import 'package:workout_timer/views/beep_config.dart';
 
 void main() {
@@ -77,6 +79,37 @@ final timerNotifierProvider =
   return notifier;
 });
 
+final soundPool = Provider(((ref) => Soundpool.fromOptions()));
+
+final tickSound = FutureProvider<int>((ref) async {
+  return rootBundle.load("assets/sounds/tap.wav").then((ByteData soundData) {
+    return ref.read(soundPool).load(soundData);
+  });
+});
+
+class SoundPlayer {
+  ProviderRef ref;
+  int soundId;
+
+  SoundPlayer(this.ref, this.soundId);
+
+  void play() async {
+    await ref.read(soundPool).play(soundId);
+  }
+}
+
+final soundPlayerProvider = Provider((ref) async {
+  final sound = ref.watch(tickSound);
+
+  return sound.whenData((value) => SoundPlayer(ref, value));
+});
+
+// final playTick = StateProvider<int>((ref) {
+//   final soundProvider = ref.watch(tickSound);
+
+//   return ref.read(soundPool).play(soundProvider.value!);
+// });
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -100,6 +133,7 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final player = ref.watch(soundPlayerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -107,8 +141,12 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            TimerDisplayWidget(),
+          children: <Widget>[
+            const TimerDisplayWidget(),
+            IconButton(
+                onPressed: () => player
+                    .then((value) => value.whenData((value) => value.play())),
+                icon: const Icon(Icons.speaker)),
           ],
         ),
       ),
@@ -246,13 +284,9 @@ String formatDuration(
   }
 
   if (hours > 0) {
-    result = hours.toString() +
-        ':' +
-        minutes.toString().padLeft(2, '0') +
-        ':' +
-        result;
+    result = '$hours:${minutes.toString().padLeft(2, '0')}:$result';
   } else if (minutes > 0) {
-    result = minutes.toString() + ':' + result;
+    result = '$minutes:$result';
   }
 
   return result;
