@@ -7,6 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
 import 'package:workout_timer/views/beep_config.dart';
 
+import 'core/sound/sfx.dart';
+
 void main() {
   Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
   player = AudioCache(
@@ -81,12 +83,6 @@ final timerNotifierProvider =
   return notifier;
 });
 
-AudioCache? player;
-
-playTick() async {
-  return await player?.play('tap.wav');
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -118,9 +114,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
   @override
   void initState() {
     super.initState();
-    player
-        ?.load('tap.wav')
-        .whenComplete(() => loggy.debug('!!! sound files loaded'));
+    player?.loadAll([
+      for (final v in AudioEffect.values) v.fileName
+    ]).whenComplete(() => loggy.debug('!!! sound files loaded'));
   }
 
   @override
@@ -132,10 +128,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const TimerDisplayWidget(),
-            IconButton(
-                onPressed: () => playTick(), icon: const Icon(Icons.speaker)),
+          children: const <Widget>[
+            TimerDisplayWidget(),
           ],
         ),
       ),
