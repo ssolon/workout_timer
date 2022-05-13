@@ -38,7 +38,6 @@ dependencies:
   loggy: ^2.0.1+1
   flutter_loggy: ^2.0.1
   flutter_form_builder: ^7.1.1
-  soundpool: ^2.3.0
   audioplayers: ^0.20.1
 
 dev_dependencies:

@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
-import 'package:soundpool/soundpool.dart';
 import 'package:workout_timer/views/beep_config.dart';
 
 void main() {
   Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
-  player = AudioCache(prefix: 'assets/sounds/');
-  runApp(ProviderScope(child: MyApp()));
+  player = AudioCache(
+      prefix: 'assets/sounds/',
+      fixedPlayer: AudioPlayer(mode: PlayerMode.LOW_LATENCY));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 enum TimerStatus { stopped, running }
@@ -87,41 +87,8 @@ playTick() async {
   return await player?.play('tap.wav');
 }
 
-// final soundPool = Provider(((ref) => Soundpool.fromOptions()));
-
-// final tickSound = FutureProvider<int>((ref) async {
-//   return rootBundle.load("assets/sounds/tap.wav").then((ByteData soundData) {
-//     return ref.read(soundPool).load(soundData);
-//   });
-// });
-
-// class SoundPlayer {
-//   ProviderRef ref;
-//   int soundId;
-
-//   SoundPlayer(this.ref, this.soundId);
-
-//   void play() async {
-//     await ref.read(soundPool).play(soundId);
-//   }
-// }
-
-// final soundPlayerProvider = Provider((ref) async {
-//   final sound = ref.watch(tickSound);
-
-//   return sound.whenData((value) => SoundPlayer(ref, value));
-// });
-
-// final playTick = StateProvider<int>((ref) {
-//   final soundProvider = ref.watch(tickSound);
-
-//   return ref.read(soundPool).play(soundProvider.value!);
-// });
-
 class MyApp extends StatelessWidget {
-  MyApp({super.key}) {
-    // player = AudioCache(prefix: 'assets/sounds/');
-  }
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -158,7 +125,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
 
   @override
   Widget build(BuildContext context) {
-    //!!!! final player = ref.watch(soundPlayerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -273,9 +239,9 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(timerNotifierProvider);
+
     ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
         ((int? previous, int? next) {
-      loggy.debug("previous=$previous next=$next");
       if ((next ?? 0) != 0) {
         // don't tick on reset
         playTick();
