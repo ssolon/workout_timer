@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
@@ -10,7 +11,8 @@ import 'package:workout_timer/views/beep_config.dart';
 
 void main() {
   Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
-  runApp(const ProviderScope(child: MyApp()));
+  player = AudioCache(prefix: 'assets/sounds/');
+  runApp(ProviderScope(child: MyApp()));
 }
 
 enum TimerStatus { stopped, running }
@@ -79,30 +81,36 @@ final timerNotifierProvider =
   return notifier;
 });
 
-final soundPool = Provider(((ref) => Soundpool.fromOptions()));
+AudioCache? player;
 
-final tickSound = FutureProvider<int>((ref) async {
-  return rootBundle.load("assets/sounds/tap.wav").then((ByteData soundData) {
-    return ref.read(soundPool).load(soundData);
-  });
-});
-
-class SoundPlayer {
-  ProviderRef ref;
-  int soundId;
-
-  SoundPlayer(this.ref, this.soundId);
-
-  void play() async {
-    await ref.read(soundPool).play(soundId);
-  }
+playTick() async {
+  return await player?.play('tap.wav');
 }
 
-final soundPlayerProvider = Provider((ref) async {
-  final sound = ref.watch(tickSound);
+// final soundPool = Provider(((ref) => Soundpool.fromOptions()));
 
-  return sound.whenData((value) => SoundPlayer(ref, value));
-});
+// final tickSound = FutureProvider<int>((ref) async {
+//   return rootBundle.load("assets/sounds/tap.wav").then((ByteData soundData) {
+//     return ref.read(soundPool).load(soundData);
+//   });
+// });
+
+// class SoundPlayer {
+//   ProviderRef ref;
+//   int soundId;
+
+//   SoundPlayer(this.ref, this.soundId);
+
+//   void play() async {
+//     await ref.read(soundPool).play(soundId);
+//   }
+// }
+
+// final soundPlayerProvider = Provider((ref) async {
+//   final sound = ref.watch(tickSound);
+
+//   return sound.whenData((value) => SoundPlayer(ref, value));
+// });
 
 // final playTick = StateProvider<int>((ref) {
 //   final soundProvider = ref.watch(tickSound);
@@ -111,7 +119,9 @@ final soundPlayerProvider = Provider((ref) async {
 // });
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({super.key}) {
+    // player = AudioCache(prefix: 'assets/sounds/');
+  }
 
   // This widget is the root of your application.
   @override
@@ -126,17 +136,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerWidget with UiLoggy {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class MyHomePage extends ConsumerStatefulWidget with UiLoggy {
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final player = ref.watch(soundPlayerProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _MyHomePageState();
+  }
+}
+
+class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
+  @override
+  void initState() {
+    super.initState();
+    player
+        ?.load('tap.wav')
+        .whenComplete(() => loggy.debug('!!! sound files loaded'));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //!!!! final player = ref.watch(soundPlayerProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
@@ -144,9 +169,7 @@ class MyHomePage extends ConsumerWidget with UiLoggy {
           children: <Widget>[
             const TimerDisplayWidget(),
             IconButton(
-                onPressed: () => player
-                    .then((value) => value.whenData((value) => value.play())),
-                icon: const Icon(Icons.speaker)),
+                onPressed: () => playTick(), icon: const Icon(Icons.speaker)),
           ],
         ),
       ),
@@ -245,11 +268,19 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
 }
 
 class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
-  const TimerDisplayWidget({Key? key}) : super(key: key);
+  const TimerDisplayWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(timerNotifierProvider);
+    ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
+        ((int? previous, int? next) {
+      loggy.debug("previous=$previous next=$next");
+      if ((next ?? 0) != 0) {
+        // don't tick on reset
+        playTick();
+      }
+    }));
 
     return Text(
       formatDuration(state.current),

@@ -5,16 +5,17 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:workout_timer/main.dart';
 
 void main() {
-  testWidgets('Timer smoke test', (WidgetTester tester) async {
+  testWidgets(skip: false, 'Timer smoke test', (WidgetTester tester) async {
     await tester.runAsync(() async {
       // Build our app and trigger a frame.
-      await tester.pumpWidget(const ProviderScope(child: MyApp()));
+      await tester.pumpWidget(ProviderScope(child: MyApp()));
 
       // Verify that our counter starts at 0.
       expect(find.text('0.0'), findsOneWidget);
