@@ -15,31 +15,43 @@ enum SoundEvery {
   const SoundEvery(this.title);
 }
 
-class SoundConfigurationWidget extends ConsumerWidget {
-  SoundConfigurationWidget({Key? key}) : super(key: key);
-
-  final _formKey = GlobalKey<FormBuilderState>();
+class SoundConfigurationWidget extends ConsumerStatefulWidget {
+  const SoundConfigurationWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Column(children: <Widget>[
-      FormBuilder(
-          key: _formKey,
-          child: Column(children: [
-            FormBuilderSwitch(
-              name: 'sound',
-              title: Text(
-                'Sound Effects',
-                style: _headerTextStyle(context),
-              ),
-              initialValue: true,
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SoundConfigurationWidgetState();
+}
+
+class _SoundConfigurationWidgetState extends ConsumerState {
+  bool _soundEnabled = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      ExpansionTile(
+          title: Row(children: [
+            Text(
+              'Sound Effects',
+              style: _headerTextStyle(context),
             ),
+            Switch(
+              value: _soundEnabled,
+              onChanged: (enabled) {
+                setState(() {
+                  _soundEnabled = enabled;
+                });
+              },
+            ),
+          ]),
+          initiallyExpanded: true,
+          children: [
             _checkBox(context, 'start', 'Start'),
             _checkBox(context, 'stop', 'Stop'),
             _checkBox(context, 'reset', 'Reset'),
             _periodicSound(context, 'ticks', 'Tick', 1),
             _periodicSound(context, 'beeps', 'Beep', 4),
-          ])),
+          ]),
     ]);
   }
 

@@ -159,7 +159,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
                   ),
                 ],
               ),
-              SoundConfigurationWidget()
+              const SoundConfigurationWidget()
             ]),
           ),
         ]),
@@ -188,7 +188,7 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
             onPressed: running
                 ? () => ref.read(timerNotifierProvider.notifier).pause()
                 : null,
-            child: const Text('Stop')),
+            child: const Text('-')),
       )),
       Expanded(
           child: Padding(
