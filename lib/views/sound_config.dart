@@ -11,8 +11,21 @@ enum SoundEvery {
   minute('every minute');
 
   final String title;
-
   const SoundEvery(this.title);
+
+  static Map<String, SoundEvery> map = {};
+
+  /// Convert [s] to an enum entry (or null)
+  static SoundEvery? from(String s) {
+  
+    if (map.isEmpty) {
+      for (final e in SoundEvery.values) {
+        map[e.name] = e;
+      }
+    }
+
+    return map[s];
+  }
 }
 
 class SoundConfigurationWidget extends ConsumerStatefulWidget {
