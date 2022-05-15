@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
-import 'package:workout_timer/views/beep_config.dart';
+import 'package:workout_timer/views/sound_config.dart';
 
 import 'core/sound/sfx.dart';
 
@@ -143,27 +143,24 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
                   fontSize: 24,
                 )),
           ),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text('Default',
-                              style: Theme.of(context).textTheme.headlineSmall),
-                        ),
-                        const IconButton(
-                          onPressed: null,
-                          icon: Icon(Icons.save),
-                        ),
-                      ],
-                    ),
-                    BeepConfigurationWidget()
-                  ]),
-            ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text('Default',
+                        style: Theme.of(context).textTheme.headlineSmall),
+                  ),
+                  const IconButton(
+                    onPressed: null,
+                    icon: Icon(Icons.save),
+                  ),
+                ],
+              ),
+              SoundConfigurationWidget()
+            ]),
           ),
         ]),
       ),
@@ -191,7 +188,7 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
             onPressed: running
                 ? () => ref.read(timerNotifierProvider.notifier).pause()
                 : null,
-            child: const Text('-')),
+            child: const Text('Stop')),
       )),
       Expanded(
           child: Padding(
