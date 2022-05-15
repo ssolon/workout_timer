@@ -34,9 +34,21 @@ class SoundConfigurationWidget extends ConsumerWidget {
               ),
               initialValue: true,
             ),
+            _checkBox(context, 'start', 'Start'),
+            _checkBox(context, 'stop', 'Stop'),
+            _checkBox(context, 'reset', 'Reset'),
             _periodicSound(context, 'ticks', 'Tick', 1),
             _periodicSound(context, 'beeps', 'Beep', 4),
           ])),
+    ]);
+  }
+
+  _checkBox(BuildContext context, name, title) {
+    return Row(children: [
+      Expanded(
+        child: FormBuilderCheckbox(
+            name: name, title: Text(title, style: _itemTextStyle(context))),
+      ),
     ]);
   }
 
