@@ -70,9 +70,9 @@ class _SoundConfigurationWidgetState extends ConsumerState with UiLoggy {
                   context, 'stop', 'Stop', settings.stop, notifier.setStop),
               _checkBox(
                   context, 'reset', 'Reset', settings.reset, notifier.setReset),
-              _periodicSound(context, 'ticks', 'Tick', settings.tickEvery,
+              _periodicSound(context, 'ticks', 'Tick', settings.tick, notifier.setTick, settings.tickEvery,
                   notifier.setTickEvery),
-              _periodicSound(context, 'beeps', 'Beep', settings.beepEvery,
+              _periodicSound(context, 'beeps', 'Beep', settings.beep, notifier.setBeep, settings.beepEvery,
                   notifier.setBeepEvery),
             ]),
         initial: (initial) => const Text('Initializing settings'),
@@ -99,8 +99,8 @@ class _SoundConfigurationWidgetState extends ConsumerState with UiLoggy {
     ]);
   }
 
-  _periodicSound(BuildContext context, name, title, SoundEvery initial,
-      [void Function(SoundEvery?)? setter]) {
+  _periodicSound(BuildContext context, name, title, bool initial, void Function(bool?)? setter, SoundEvery initialEvery,
+      [void Function(SoundEvery?)? setterEvery]) {
     final style = _itemTextStyle(context);
 
     return Row(children: [
@@ -111,12 +111,14 @@ class _SoundConfigurationWidgetState extends ConsumerState with UiLoggy {
           title,
           style: style,
         ),
+            initialValue: initial,
+            onChanged: setter,
       )),
       Expanded(
         child: FormBuilderDropdown(
           name: name + 'Period',
-          initialValue: initial,
-          onChanged: setter,
+          initialValue: initialEvery,
+          onChanged: setterEvery,
           items: _soundsPer(style),
         ),
       ),

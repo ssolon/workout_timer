@@ -49,6 +49,14 @@ class SoundSettingsNotifier extends StateNotifier<SoundSettingsState> {
     state = settings.copyWith(reset: resetSound ?? false);
   }
 
+  void setTick(bool? tick) {
+    state = settings.copyWith(tick: tick ?? false);
+  }
+
+  void setBeep(bool? beep) {
+    state = settings.copyWith(beep: beep ?? false);
+  }
+
   void setTickEvery(SoundEvery? every) {
     if (every != null) {
       state = settings.copyWith(tickEvery: every);
