@@ -5,30 +5,7 @@ import 'package:loggy/loggy.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_state.dart';
 
-/// Configure when the timer beeps
-
-enum SoundEvery {
-  second('every second'),
-  tenSecond('every 10 seconds'),
-  thirtySecond('every 30 seconds'),
-  minute('every minute');
-
-  final String title;
-  const SoundEvery(this.title);
-
-  static Map<String, SoundEvery> map = {};
-
-  /// Convert [s] to an enum entry (or null)
-  static SoundEvery? from(String s) {
-    if (map.isEmpty) {
-      for (final e in SoundEvery.values) {
-        map[e.name] = e;
-      }
-    }
-
-    return map[s];
-  }
-}
+/// Configure when the timer beeps/ticks
 
 class SoundConfigurationWidget extends ConsumerStatefulWidget {
   const SoundConfigurationWidget({super.key});
