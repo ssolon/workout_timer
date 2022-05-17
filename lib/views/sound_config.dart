@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:loggy/loggy.dart';
+import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
+import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_state.dart';
 
 /// Configure when the timer beeps
 
@@ -17,7 +20,6 @@ enum SoundEvery {
 
   /// Convert [s] to an enum entry (or null)
   static SoundEvery? from(String s) {
-  
     if (map.isEmpty) {
       for (final e in SoundEvery.values) {
         map[e.name] = e;
@@ -36,48 +38,69 @@ class SoundConfigurationWidget extends ConsumerStatefulWidget {
       _SoundConfigurationWidgetState();
 }
 
-class _SoundConfigurationWidgetState extends ConsumerState {
-  bool _soundEnabled = true;
-
+class _SoundConfigurationWidgetState extends ConsumerState with UiLoggy {
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      ExpansionTile(
-          title: Row(children: [
-            Text(
-              'Sound Effects',
-              style: _headerTextStyle(context),
-            ),
-            Switch(
-              value: _soundEnabled,
-              onChanged: (enabled) {
-                setState(() {
-                  _soundEnabled = enabled;
-                });
-              },
-            ),
-          ]),
-          initiallyExpanded: true,
-          children: [
-            _checkBox(context, 'start', 'Start'),
-            _checkBox(context, 'stop', 'Stop'),
-            _checkBox(context, 'reset', 'Reset'),
-            _periodicSound(context, 'ticks', 'Tick', 1),
-            _periodicSound(context, 'beeps', 'Beep', 4),
-          ]),
-    ]);
-  }
+    final provider = ref.watch(soundSettingsNotifierProvider);
+    final notifier = ref.read(soundSettingsNotifierProvider.notifier);
 
-  _checkBox(BuildContext context, name, title) {
-    return Row(children: [
-      Expanded(
-        child: FormBuilderCheckbox(
-            name: name, title: Text(title, style: _itemTextStyle(context))),
+    return Column(children: [
+      provider.map(
+        (settings) => ExpansionTile(
+            title: Row(children: [
+              Text(
+                'Sound Effects',
+                style: _headerTextStyle(context),
+              ),
+              Switch(
+                value: settings.enabled,
+                onChanged: (isEnabled) {
+                  notifier.setEnabled(isEnabled);
+                },
+              ),
+            ]),
+            initiallyExpanded: settings.expanded,
+            onExpansionChanged: (isExpanded) {
+              notifier.setExpanded(isExpanded);
+            },
+            children: [
+              _checkBox(
+                  context, 'start', 'Start', settings.start, notifier.setStart),
+              _checkBox(
+                  context, 'stop', 'Stop', settings.stop, notifier.setStop),
+              _checkBox(
+                  context, 'reset', 'Reset', settings.reset, notifier.setReset),
+              _periodicSound(context, 'ticks', 'Tick', settings.tickEvery,
+                  notifier.setTickEvery),
+              _periodicSound(context, 'beeps', 'Beep', settings.beepEvery,
+                  notifier.setBeepEvery),
+            ]),
+        initial: (initial) => const Text('Initializing settings'),
+        loading: (loading) => const Text('Settings are loading...'),
+        error: (msg) => Text("An error has occurred:$msg"),
       ),
     ]);
   }
 
-  _periodicSound(BuildContext context, name, title, initial) {
+  _checkBox(BuildContext context, String name, String title, bool initial,
+      [void Function(bool?)? setter]) {
+    return Row(children: [
+      Expanded(
+        child: FormBuilderCheckbox(
+          name: name,
+          title: Text(
+            title,
+            style: _itemTextStyle(context),
+          ),
+          initialValue: initial,
+          onChanged: setter,
+        ),
+      ),
+    ]);
+  }
+
+  _periodicSound(BuildContext context, name, title, SoundEvery initial,
+      [void Function(SoundEvery?)? setter]) {
     final style = _itemTextStyle(context);
 
     return Row(children: [
@@ -93,6 +116,7 @@ class _SoundConfigurationWidgetState extends ConsumerState {
         child: FormBuilderDropdown(
           name: name + 'Period',
           initialValue: initial,
+          onChanged: setter,
           items: _soundsPer(style),
         ),
       ),
@@ -103,7 +127,7 @@ class _SoundConfigurationWidgetState extends ConsumerState {
     int i = 1;
     return [
       for (final v in SoundEvery.values)
-        DropdownMenuItem(value: i++, child: Text(v.title, style: style)),
+        DropdownMenuItem(value: v, child: Text(v.title, style: style)),
     ];
   }
 

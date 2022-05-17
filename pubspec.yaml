@@ -39,6 +39,7 @@ dependencies:
   flutter_loggy: ^2.0.1
   flutter_form_builder: ^7.1.1
   audioplayers: ^0.20.1
+  freezed_annotation: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
   icons_launcher: ^1.1.5
+  build_runner: ^2.1.10
+  freezed: ^2.0.3+1
 
 flutter_icons:
   image_path: "assets/images/stopwatch.png"
