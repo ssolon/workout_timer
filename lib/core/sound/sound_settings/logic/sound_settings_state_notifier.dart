@@ -1,5 +1,4 @@
 part of 'sound_settings_provider.dart';
-// TODO: Implement SoundSettings StateNotifier
 
 /// Defines all the SoundSettings logic the app will use
 class SoundSettingsNotifier extends StateNotifier<SoundSettingsState> {

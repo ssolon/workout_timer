@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:workout_timer/views/sound_config.dart';
 
 import 'sound_settings_state.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:loggy/loggy.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_state.dart';
 
@@ -98,7 +97,6 @@ class SoundConfigurationWidget extends ConsumerWidget {
   }
 
   _soundsPer(style) {
-    int i = 1;
     return [
       for (final v in SoundEvery.values)
         DropdownMenuItem(value: v, child: Text(v.title, style: style)),
