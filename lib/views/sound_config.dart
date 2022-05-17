@@ -7,17 +7,11 @@ import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_sta
 
 /// Configure when the timer beeps/ticks
 
-class SoundConfigurationWidget extends ConsumerStatefulWidget {
+class SoundConfigurationWidget extends ConsumerWidget {
   const SoundConfigurationWidget({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _SoundConfigurationWidgetState();
-}
-
-class _SoundConfigurationWidgetState extends ConsumerState with UiLoggy {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(soundSettingsNotifierProvider);
     final notifier = ref.read(soundSettingsNotifierProvider.notifier);
 
