@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
+import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/views/sound_config.dart';
 
 import 'core/sound/sfx.dart';
@@ -230,13 +231,21 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(timerNotifierProvider);
+    final soundSettingsProvider = ref.watch(soundSettingsNotifierProvider);
 
     ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
         ((int? previous, int? next) {
-      if ((next ?? 0) != 0) {
-        // don't tick on reset
-        playTick();
-      }
+      soundSettingsProvider.mapOrNull((settings) {
+        if (settings.enabled && state.status == TimerStatus.running) {
+          if (next != null) {
+            if (settings.beep && settings.beepEvery.playIt(next)) {
+              loggy.debug("Beep!"); // no beep sound yet
+            } else if (settings.tick && settings.tickEvery.playIt(next)) {
+              playTick();
+            }
+          }
+        }
+      });
     }));
 
     return Text(

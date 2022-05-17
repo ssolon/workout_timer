@@ -16,7 +16,7 @@ enum SoundEvery {
   static Map<String, SoundEvery> map = {};
 
   /// Check for hit
-  bool playIt(Duration duration) => duration.inSeconds % seconds == 0;
+  bool playIt(int durationSeconds) => durationSeconds % seconds == 0;
 
   /// Convert [s] to an enum entry (or null)
   static SoundEvery? from(String s) {
