@@ -239,7 +239,7 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
         if (settings.enabled && state.status == TimerStatus.running) {
           if (next != null) {
             if (settings.beep && settings.beepEvery.playIt(next)) {
-              loggy.debug("Beep!"); // no beep sound yet
+              playBeep();
             } else if (settings.tick && settings.tickEvery.playIt(next)) {
               playTick();
             }

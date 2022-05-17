@@ -88,6 +88,9 @@ flutter:
 
   assets:
     - assets/sounds/tap.wav
+    - assets/sounds/beep4.wav  # https://freesound.org/people/thisusernameis/sounds/426888/
+    - assets/sounds/menu-beep.wav # https://freesound.org/people/Eponn/sounds/531511/
+    - assets/sounds/microwave-beep.wav # https://freesound.org/people/KeyKrusher/sounds/154953/
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
