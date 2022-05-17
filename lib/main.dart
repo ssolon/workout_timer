@@ -198,7 +198,10 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
             style: _commandButtonStyle(
                 context, running ? Colors.grey : Colors.yellow),
             onPressed: !running
-                ? () => ref.read(timerNotifierProvider.notifier).reset()
+                ? () {
+                    ref.read(soundPlayerProvider).playReset();
+                    ref.read(timerNotifierProvider.notifier).reset();
+                  }
                 : null,
             child: const Text('Reset')),
       )),
@@ -236,12 +239,12 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
     ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
         ((int? previous, int? next) {
       soundSettingsProvider.mapOrNull((settings) {
-        if (settings.enabled && state.status == TimerStatus.running) {
+        if (state.status == TimerStatus.running) {
           if (next != null) {
             if (settings.beep && settings.beepEvery.playIt(next)) {
-              playBeep();
+              ref.read(soundPlayerProvider).playBeep();
             } else if (settings.tick && settings.tickEvery.playIt(next)) {
-              playTick();
+              ref.read(soundPlayerProvider).playTick();
             }
           }
         }
