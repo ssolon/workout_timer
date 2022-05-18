@@ -11,6 +11,7 @@ import 'package:workout_timer/views/sound_config.dart';
 import 'core/sound/sfx.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Loggy.initLoggy(logPrinter: const PrettyDeveloperPrinter());
   player = AudioCache(
       prefix: 'assets/sounds/',
