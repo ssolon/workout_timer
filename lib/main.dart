@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -241,6 +242,10 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(timerNotifierProvider);
+    final style = Theme.of(context)
+        .textTheme
+        .headline2
+        ?.copyWith(fontFamily: Platform.isIOS ? "Helvetica Neue" : "monospace");
 
     ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
         ((int? previous, int? next) {
@@ -259,7 +264,7 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
 
     return Text(
       formatDuration(state.current),
-      style: Theme.of(context).textTheme.headline2,
+      style: style,
     );
   }
 }
