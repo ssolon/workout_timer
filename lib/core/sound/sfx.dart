@@ -38,6 +38,12 @@ class SoundPlayer {
   /// Play beep sound if sound is enabled.
   playBeep() async => playEffect(AudioEffect.beep);
 
+  /// Play start sound if sound enabled.
+  playStart() async => playEffect(AudioEffect.start);
+
+  /// Play stop sound if sound enabled.
+  playStop() async => playEffect(AudioEffect.stop);
+
   /// Play reset sound if sound is enabled.
   playReset() async => playEffect(AudioEffect.reset);
 }
@@ -49,7 +55,9 @@ AudioCache? player;
 enum AudioEffect {
   tick("tap.wav"),
   beep("microwave-beep.wav"),
-  stop("beep4.wav"),
+  start("start_beep3.wav"),
+  stop("stop_beep3.wav"),
+  // stop("beep4.wav"), // Maybe use for routine/done?
   reset("menu-beep.wav");
 
   final String fileName;
