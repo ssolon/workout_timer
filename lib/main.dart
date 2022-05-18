@@ -242,7 +242,7 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(timerNotifierProvider);
-    final style = Theme.of(context)
+    final counterStyle = Theme.of(context)
         .textTheme
         .headline2
         ?.copyWith(fontFamily: Platform.isIOS ? "Helvetica Neue" : "monospace");
@@ -264,7 +264,7 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
 
     return Text(
       formatDuration(state.current),
-      style: style,
+      style: counterStyle,
     );
   }
 }
