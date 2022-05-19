@@ -58,7 +58,8 @@ enum AudioEffect {
   start("start_beep3.wav"),
   stop("stop_beep3.wav"),
   // stop("beep4.wav"), // Maybe use for routine/done?
-  reset("menu-beep.wav");
+  // reset("menu-beep.wav"),
+  reset("poof-in-cloud.mp3");
 
   final String fileName;
 

@@ -93,6 +93,7 @@ flutter:
     - assets/sounds/microwave-beep.wav # https://freesound.org/people/KeyKrusher/sounds/154953/
     - assets/sounds/start_beep3.wav # https://freesound.org/people/steveygos93/sounds/103588/
     - assets/sounds/stop_beep3.wav # https://freesound.org/people/steveygos93/sounds/103588/
+    - assets/sounds/poof-in-cloud.mp3 # https://freesound.org/people/Herkules92/sounds/512217/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
