@@ -45,13 +45,4 @@ class SoundSettingsState with _$SoundSettingsState {
     required bool beep,
     required SoundEvery beepEvery,
   }) = Settings;
-
-  /// Initial/default state
-  const factory SoundSettingsState.initial() = Initial;
-
-  /// Data is loading state
-  const factory SoundSettingsState.loading() = Loading;
-
-  /// Error when loading data state
-  const factory SoundSettingsState.error([String? message]) = Error;
 }

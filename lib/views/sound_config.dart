@@ -11,44 +11,38 @@ class SoundConfigurationWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(soundSettingsNotifierProvider);
+    final settings = ref.watch(soundSettingsNotifierProvider);
     final notifier = ref.read(soundSettingsNotifierProvider.notifier);
 
     return Column(children: [
-      provider.map(
-        (settings) => ExpansionTile(
-            title: Row(children: [
-              Text(
-                'Sound Effects',
-                style: _headerTextStyle(context),
-              ),
-              Switch(
-                value: settings.enabled,
-                onChanged: (isEnabled) {
-                  notifier.setEnabled(isEnabled);
-                },
-              ),
-            ]),
-            initiallyExpanded: settings.expanded,
-            onExpansionChanged: (isExpanded) {
-              notifier.setExpanded(isExpanded);
-            },
-            children: [
-              _checkBox(
-                  context, 'start', 'Start', settings.start, notifier.setStart),
-              _checkBox(
-                  context, 'stop', 'Stop', settings.stop, notifier.setStop),
-              _checkBox(
-                  context, 'reset', 'Reset', settings.reset, notifier.setReset),
-              _periodicSound(context, 'ticks', 'Tick', settings.tick,
-                  notifier.setTick, settings.tickEvery, notifier.setTickEvery),
-              _periodicSound(context, 'beeps', 'Beep', settings.beep,
-                  notifier.setBeep, settings.beepEvery, notifier.setBeepEvery),
-            ]),
-        initial: (initial) => const Text('Initializing settings'),
-        loading: (loading) => const Text('Settings are loading...'),
-        error: (msg) => Text("An error has occurred:$msg"),
-      ),
+      ExpansionTile(
+          title: Row(children: [
+            Text(
+              'Sound Effects',
+              style: _headerTextStyle(context),
+            ),
+            Switch(
+              value: settings.enabled,
+              onChanged: (isEnabled) {
+                notifier.setEnabled(isEnabled);
+              },
+            ),
+          ]),
+          initiallyExpanded: settings.expanded,
+          onExpansionChanged: (isExpanded) {
+            notifier.setExpanded(isExpanded);
+          },
+          children: [
+            _checkBox(
+                context, 'start', 'Start', settings.start, notifier.setStart),
+            _checkBox(context, 'stop', 'Stop', settings.stop, notifier.setStop),
+            _checkBox(
+                context, 'reset', 'Reset', settings.reset, notifier.setReset),
+            _periodicSound(context, 'ticks', 'Tick', settings.tick,
+                notifier.setTick, settings.tickEvery, notifier.setTickEvery),
+            _periodicSound(context, 'beeps', 'Beep', settings.beep,
+                notifier.setBeep, settings.beepEvery, notifier.setBeepEvery),
+          ]),
     ]);
   }
 

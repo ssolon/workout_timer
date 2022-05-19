@@ -18,15 +18,15 @@ class SoundSettingsNotifier extends StateNotifier<SoundSettingsState> {
         ));
 
   /// Return either the current settings state or a default
-  Settings get settings {
-    return state.map((data) => data,
-        initial: (initial) =>
-            throw UnsupportedError("Can't get setting in initial state"),
-        loading: (loading) =>
-            throw UnsupportedError("Can't get settings in loading state"),
-        error: (error) =>
-            throw UnsupportedError("Can't get settings in error state"));
-  }
+  SoundSettingsState get settings => state;
+  //   return state.map((data) => data,
+  //       initial: (initial) =>
+  //           throw UnsupportedError("Can't get setting in initial state"),
+  //       loading: (loading) =>
+  //           throw UnsupportedError("Can't get settings in loading state"),
+  //       error: (error) =>
+  //           throw UnsupportedError("Can't get settings in error state"));
+  // }
 
   void setEnabled(bool isEnabled) {
     state = settings.copyWith(enabled: isEnabled);

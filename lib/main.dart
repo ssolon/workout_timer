@@ -249,17 +249,16 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
 
     ref.listen(timerNotifierProvider.select((value) => value.current.inSeconds),
         ((int? previous, int? next) {
-      ref.read(soundSettingsNotifierProvider).mapOrNull((settings) {
-        if (state.status == TimerStatus.running) {
-          if (next != null) {
-            if (settings.beep && settings.beepEvery.playIt(next)) {
-              ref.read(soundPlayerProvider).playBeep();
-            } else if (settings.tick && settings.tickEvery.playIt(next)) {
-              ref.read(soundPlayerProvider).playTick();
-            }
+      final settings = ref.read(soundSettingsNotifierProvider);
+      if (state.status == TimerStatus.running) {
+        if (next != null) {
+          if (settings.beep && settings.beepEvery.playIt(next)) {
+            ref.read(soundPlayerProvider).playBeep();
+          } else if (settings.tick && settings.tickEvery.playIt(next)) {
+            ref.read(soundPlayerProvider).playTick();
           }
         }
-      });
+      }
     }));
 
     return Text(

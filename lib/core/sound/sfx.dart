@@ -20,11 +20,9 @@ class SoundPlayer {
 
   /// Play sound from [fileName] if sound is enabled.
   play(String fileName) async {
-    final enabled = ref
-        .read(soundSettingsNotifierProvider)
-        .mapOrNull((settings) => settings.enabled);
+    final enabled = ref.read(soundSettingsNotifierProvider).enabled;
 
-    if (enabled ?? false) {
+    if (enabled) {
       return await player?.play(fileName);
     }
   }
