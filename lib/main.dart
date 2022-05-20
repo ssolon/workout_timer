@@ -190,7 +190,9 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                 context, running ? Colors.red : Colors.grey),
             onPressed: running
                 ? () {
-                    ref.read(soundPlayerProvider).playStop();
+                    if (ref.read(soundSettingsNotifierProvider).stop) {
+                      ref.read(soundPlayerProvider).playStop();
+                    }
                     ref.read(timerNotifierProvider.notifier).pause();
                   }
                 : null,
@@ -204,7 +206,9 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                 context, running ? Colors.grey : Colors.yellow),
             onPressed: !running
                 ? () {
-                    ref.read(soundPlayerProvider).playReset();
+                    if (ref.read(soundSettingsNotifierProvider).reset) {
+                      ref.read(soundPlayerProvider).playReset();
+                    }
                     ref.read(timerNotifierProvider.notifier).reset();
                   }
                 : null,
@@ -218,7 +222,9 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                 context, running ? Colors.grey : Colors.green),
             onPressed: !running
                 ? () {
-                    ref.read(soundPlayerProvider).playStart();
+                    if (ref.read(soundSettingsNotifierProvider).start) {
+                      ref.read(soundPlayerProvider).playStart();
+                    }
                     ref.read(timerNotifierProvider.notifier).start();
                   }
                 : null,
