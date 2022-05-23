@@ -196,7 +196,7 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                     ref.read(timerNotifierProvider.notifier).pause();
                   }
                 : null,
-            child: const Text('-')),
+            child: const Icon(Icons.pause)),
       )),
       Expanded(
           child: Padding(
@@ -212,14 +212,14 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                     ref.read(timerNotifierProvider.notifier).reset();
                   }
                 : null,
-            child: const Text('Reset')),
+            child: const Icon(Icons.check)),
       )),
       Expanded(
           child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: ElevatedButton(
             style: _commandButtonStyle(
-                context, running ? Colors.grey : Colors.green),
+                context, running ? Colors.blue : Colors.green),
             onPressed: !running
                 ? () {
                     if (ref.read(soundSettingsNotifierProvider).start) {
@@ -228,7 +228,9 @@ class BottomSheetWidget extends ConsumerWidget with UiLoggy {
                     ref.read(timerNotifierProvider.notifier).start();
                   }
                 : null,
-            child: const Text('+')),
+            child: running
+                ? const Icon(Icons.timelapse)
+                : const Icon(Icons.play_arrow)),
       )),
     ]);
   }
