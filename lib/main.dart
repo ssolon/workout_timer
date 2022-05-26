@@ -10,7 +10,7 @@ import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_pro
 import 'package:workout_timer/views/sound_config.dart';
 
 import 'core/sound/sfx.dart';
-import 'core/step/routine_selector_widget.dart';
+import 'views/routine_selector_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

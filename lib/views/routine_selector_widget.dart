@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../routine/logic/routine_state.dart';
-import '../routines/logic/routines_provider.dart';
+import '../core/routine/logic/routine_state.dart';
+import '../core/routines/logic/routines_provider.dart';
 
 class RoutineSelectorWidget extends ConsumerWidget {
   const RoutineSelectorWidget({super.key});
