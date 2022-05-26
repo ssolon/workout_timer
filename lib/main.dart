@@ -13,6 +13,7 @@ import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_pro
 import 'package:workout_timer/views/sound_config.dart';
 
 import 'core/sound/sfx.dart';
+import 'core/step/routine_selector_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -133,7 +134,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
       ),
       body: Center(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(8.0),
@@ -181,45 +183,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
       ),
       bottomSheet: const BottomSheetWidget(),
     );
-  }
-}
-
-class RoutineSelectorWidget extends ConsumerStatefulWidget {
-  const RoutineSelectorWidget({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return _RoutineSelectorWidgetState();
-  }
-}
-
-class _RoutineSelectorWidgetState extends ConsumerState {
-  RoutineState? currentRoutine;
-
-  @override
-  Widget build(BuildContext context) {
-    final routines = ref.watch(routinesNotifierProvider);
-
-    // Initialize current
-    currentRoutine ??= routines.whenOrNull((value) => value.first);
-
-    return routines.maybeWhen(
-        (value) => DropdownButton<RoutineState>(
-              onChanged: (value) {
-                setState(() {
-                  currentRoutine = value;
-                });
-              },
-              value: currentRoutine,
-              items: [
-                for (final r in value)
-                  DropdownMenuItem(
-                      value: r,
-                      child: Text(r.maybeMap((value) => value.name,
-                          orElse: () => '????'))),
-              ],
-            ),
-        orElse: () => const Text('No routines defined!'));
   }
 }
 
