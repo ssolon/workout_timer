@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'routine_state.dart';
+part of 'routines_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,11 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$RoutineState {
+mixin _$RoutinesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
-        $default, {
+    TResult Function(List<RoutineState> routines) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -27,8 +26,7 @@ mixin _$RoutineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -36,8 +34,7 @@ mixin _$RoutineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -72,30 +69,31 @@ mixin _$RoutineState {
 }
 
 /// @nodoc
-abstract class $RoutineStateCopyWith<$Res> {
-  factory $RoutineStateCopyWith(
-          RoutineState value, $Res Function(RoutineState) then) =
-      _$RoutineStateCopyWithImpl<$Res>;
+abstract class $RoutinesStateCopyWith<$Res> {
+  factory $RoutinesStateCopyWith(
+          RoutinesState value, $Res Function(RoutinesState) then) =
+      _$RoutinesStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$RoutineStateCopyWithImpl<$Res> implements $RoutineStateCopyWith<$Res> {
-  _$RoutineStateCopyWithImpl(this._value, this._then);
+class _$RoutinesStateCopyWithImpl<$Res>
+    implements $RoutinesStateCopyWith<$Res> {
+  _$RoutinesStateCopyWithImpl(this._value, this._then);
 
-  final RoutineState _value;
+  final RoutinesState _value;
   // ignore: unused_field
-  final $Res Function(RoutineState) _then;
+  final $Res Function(RoutinesState) _then;
 }
 
 /// @nodoc
 abstract class _$$DataCopyWith<$Res> {
   factory _$$DataCopyWith(_$Data value, $Res Function(_$Data) then) =
       __$$DataCopyWithImpl<$Res>;
-  $Res call({String name, String? description, List<StepState> steps});
+  $Res call({List<RoutineState> routines});
 }
 
 /// @nodoc
-class __$$DataCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
+class __$$DataCopyWithImpl<$Res> extends _$RoutinesStateCopyWithImpl<$Res>
     implements _$$DataCopyWith<$Res> {
   __$$DataCopyWithImpl(_$Data _value, $Res Function(_$Data) _then)
       : super(_value, (v) => _then(v as _$Data));
@@ -105,23 +103,13 @@ class __$$DataCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? name = freezed,
-    Object? description = freezed,
-    Object? steps = freezed,
+    Object? routines = freezed,
   }) {
     return _then(_$Data(
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      steps: steps == freezed
-          ? _value._steps
-          : steps // ignore: cast_nullable_to_non_nullable
-              as List<StepState>,
+      routines: routines == freezed
+          ? _value._routines
+          : routines // ignore: cast_nullable_to_non_nullable
+              as List<RoutineState>,
     ));
   }
 }
@@ -129,26 +117,20 @@ class __$$DataCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Data implements Data {
-  const _$Data(
-      {required this.name,
-      this.description,
-      required final List<StepState> steps})
-      : _steps = steps;
+  const _$Data({final List<RoutineState> routines = const []})
+      : _routines = routines;
 
+  final List<RoutineState> _routines;
   @override
-  final String name;
-  @override
-  final String? description;
-  final List<StepState> _steps;
-  @override
-  List<StepState> get steps {
+  @JsonKey()
+  List<RoutineState> get routines {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_steps);
+    return EqualUnmodifiableListView(_routines);
   }
 
   @override
   String toString() {
-    return 'RoutineState(name: $name, description: $description, steps: $steps)';
+    return 'RoutinesState(routines: $routines)';
   }
 
   @override
@@ -156,18 +138,12 @@ class _$Data implements Data {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Data &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other._steps, _steps));
+            const DeepCollectionEquality().equals(other._routines, _routines));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(_steps));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_routines));
 
   @JsonKey(ignore: true)
   @override
@@ -177,39 +153,36 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
-        $default, {
+    TResult Function(List<RoutineState> routines) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message) error,
   }) {
-    return $default(name, description, steps);
+    return $default(routines);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
   }) {
-    return $default?.call(name, description, steps);
+    return $default?.call(routines);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(name, description, steps);
+      return $default(routines);
     }
     return orElse();
   }
@@ -252,15 +225,10 @@ class _$Data implements Data {
   }
 }
 
-abstract class Data implements RoutineState {
-  const factory Data(
-      {required final String name,
-      final String? description,
-      required final List<StepState> steps}) = _$Data;
+abstract class Data implements RoutinesState {
+  const factory Data({final List<RoutineState> routines}) = _$Data;
 
-  String get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  List<StepState> get steps => throw _privateConstructorUsedError;
+  List<RoutineState> get routines => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$DataCopyWith<_$Data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -272,7 +240,7 @@ abstract class _$$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$InitialCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
+class __$$InitialCopyWithImpl<$Res> extends _$RoutinesStateCopyWithImpl<$Res>
     implements _$$InitialCopyWith<$Res> {
   __$$InitialCopyWithImpl(_$Initial _value, $Res Function(_$Initial) _then)
       : super(_value, (v) => _then(v as _$Initial));
@@ -288,7 +256,7 @@ class _$Initial implements Initial {
 
   @override
   String toString() {
-    return 'RoutineState.initial()';
+    return 'RoutinesState.initial()';
   }
 
   @override
@@ -303,8 +271,7 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
-        $default, {
+    TResult Function(List<RoutineState> routines) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -315,8 +282,7 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -327,8 +293,7 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -378,7 +343,7 @@ class _$Initial implements Initial {
   }
 }
 
-abstract class Initial implements RoutineState {
+abstract class Initial implements RoutinesState {
   const factory Initial() = _$Initial;
 }
 
@@ -389,7 +354,7 @@ abstract class _$$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$LoadingCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
+class __$$LoadingCopyWithImpl<$Res> extends _$RoutinesStateCopyWithImpl<$Res>
     implements _$$LoadingCopyWith<$Res> {
   __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
       : super(_value, (v) => _then(v as _$Loading));
@@ -405,7 +370,7 @@ class _$Loading implements Loading {
 
   @override
   String toString() {
-    return 'RoutineState.loading()';
+    return 'RoutinesState.loading()';
   }
 
   @override
@@ -420,8 +385,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
-        $default, {
+    TResult Function(List<RoutineState> routines) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -432,8 +396,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -444,8 +407,7 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -495,7 +457,7 @@ class _$Loading implements Loading {
   }
 }
 
-abstract class Loading implements RoutineState {
+abstract class Loading implements RoutinesState {
   const factory Loading() = _$Loading;
 }
 
@@ -507,7 +469,7 @@ abstract class _$$ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ErrorCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
+class __$$ErrorCopyWithImpl<$Res> extends _$RoutinesStateCopyWithImpl<$Res>
     implements _$$ErrorCopyWith<$Res> {
   __$$ErrorCopyWithImpl(_$Error _value, $Res Function(_$Error) _then)
       : super(_value, (v) => _then(v as _$Error));
@@ -538,7 +500,7 @@ class _$Error implements Error {
 
   @override
   String toString() {
-    return 'RoutineState.error(message: $message)';
+    return 'RoutinesState.error(message: $message)';
   }
 
   @override
@@ -561,8 +523,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
-        $default, {
+    TResult Function(List<RoutineState> routines) $default, {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(String? message) error,
@@ -573,8 +534,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -585,8 +545,7 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
-        $default, {
+    TResult Function(List<RoutineState> routines)? $default, {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(String? message)? error,
@@ -636,7 +595,7 @@ class _$Error implements Error {
   }
 }
 
-abstract class Error implements RoutineState {
+abstract class Error implements RoutinesState {
   const factory Error([final String? message]) = _$Error;
 
   String? get message => throw _privateConstructorUsedError;

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:workout_timer/core/step/logic/step_state.dart';
 
 part 'routine_state.freezed.dart';
 
@@ -9,6 +10,7 @@ abstract class RoutineState with _$RoutineState {
   const factory RoutineState({
     required String name,
     String? description,
+    required List<StepState> steps,
   }) = Data;
 
   /// Initial/default state

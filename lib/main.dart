@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
+import 'package:workout_timer/core/routine/logic/routine_provider.dart';
+import 'package:workout_timer/core/routine/logic/routine_state.dart';
+import 'package:workout_timer/core/routines/logic/routines_provider.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/views/sound_config.dart';
 
@@ -130,9 +133,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            TimerDisplayWidget(),
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: const RoutineSelectorWidget(),
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: const TimerDisplayWidget(),
+              ),
+            ),
           ],
         ),
       ),
@@ -169,6 +181,45 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
       ),
       bottomSheet: const BottomSheetWidget(),
     );
+  }
+}
+
+class RoutineSelectorWidget extends ConsumerStatefulWidget {
+  const RoutineSelectorWidget({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return _RoutineSelectorWidgetState();
+  }
+}
+
+class _RoutineSelectorWidgetState extends ConsumerState {
+  RoutineState? currentRoutine;
+
+  @override
+  Widget build(BuildContext context) {
+    final routines = ref.watch(routinesNotifierProvider);
+
+    // Initialize current
+    currentRoutine ??= routines.whenOrNull((value) => value.first);
+
+    return routines.maybeWhen(
+        (value) => DropdownButton<RoutineState>(
+              onChanged: (value) {
+                setState(() {
+                  currentRoutine = value;
+                });
+              },
+              value: currentRoutine,
+              items: [
+                for (final r in value)
+                  DropdownMenuItem(
+                      value: r,
+                      child: Text(r.maybeMap((value) => value.name,
+                          orElse: () => '????'))),
+              ],
+            ),
+        orElse: () => const Text('No routines defined!'));
   }
 }
 
