@@ -14,8 +14,8 @@ enum BeginAction {
 }
 
 @freezed
-abstract class StepState with _$StepState {
-  const factory StepState({
+abstract class RoutineStepState with _$RoutineStepState {
+  const factory RoutineStepState({
     required String name,
     String? description,
     @Default(BeginAction.waitForStartCommand) BeginAction beginAction,

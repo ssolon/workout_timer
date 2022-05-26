@@ -5,4 +5,8 @@ class RoutineNotifier extends StateNotifier<RoutineState> {
   /// Base constructor expects StateNotifier use_cases to
   /// read its usecases and also defines inital state
   RoutineNotifier() : super(const RoutineState.initial());
+
+  void setRoutine(RoutineState newState) {
+    state = newState;
+  }
 }

@@ -5,7 +5,8 @@ import 'routine_state.dart';
 part 'routine_state_notifier.dart';
 
 /// Provider to use the RoutineStateNotifier
-final routineNotifierProvider = StateNotifierProvider(
+final routineNotifierProvider =
+    StateNotifierProvider<RoutineNotifier, RoutineState>(
   (ref) => RoutineNotifier(),
 );
 

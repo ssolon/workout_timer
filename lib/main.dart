@@ -7,6 +7,7 @@ import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
+import 'package:workout_timer/views/routine_config_widget.dart';
 import 'package:workout_timer/views/sound_config.dart';
 
 import 'core/sound/sfx.dart';
@@ -171,7 +172,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
                   ),
                 ],
               ),
-              const SoundConfigurationWidget()
+              const RoutineConfigWidget(),
+              const SoundConfigurationWidget(),
             ]),
           ),
         ]),

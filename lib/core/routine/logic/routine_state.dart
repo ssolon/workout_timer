@@ -10,7 +10,7 @@ abstract class RoutineState with _$RoutineState {
   const factory RoutineState({
     required String name,
     String? description,
-    required List<StepState> steps,
+    required List<RoutineStepState> steps,
   }) = Data;
 
   /// Initial/default state

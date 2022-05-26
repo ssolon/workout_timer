@@ -15,21 +15,22 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StepState {
+mixin _$RoutineStepState {
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   BeginAction get beginAction => throw _privateConstructorUsedError;
   StepTimer get timer => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $StepStateCopyWith<StepState> get copyWith =>
+  $RoutineStepStateCopyWith<RoutineStepState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StepStateCopyWith<$Res> {
-  factory $StepStateCopyWith(StepState value, $Res Function(StepState) then) =
-      _$StepStateCopyWithImpl<$Res>;
+abstract class $RoutineStepStateCopyWith<$Res> {
+  factory $RoutineStepStateCopyWith(
+          RoutineStepState value, $Res Function(RoutineStepState) then) =
+      _$RoutineStepStateCopyWithImpl<$Res>;
   $Res call(
       {String name,
       String? description,
@@ -38,12 +39,13 @@ abstract class $StepStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StepStateCopyWithImpl<$Res> implements $StepStateCopyWith<$Res> {
-  _$StepStateCopyWithImpl(this._value, this._then);
+class _$RoutineStepStateCopyWithImpl<$Res>
+    implements $RoutineStepStateCopyWith<$Res> {
+  _$RoutineStepStateCopyWithImpl(this._value, this._then);
 
-  final StepState _value;
+  final RoutineStepState _value;
   // ignore: unused_field
-  final $Res Function(StepState) _then;
+  final $Res Function(RoutineStepState) _then;
 
   @override
   $Res call({
@@ -74,7 +76,8 @@ class _$StepStateCopyWithImpl<$Res> implements $StepStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_StepStateCopyWith<$Res> implements $StepStateCopyWith<$Res> {
+abstract class _$$_StepStateCopyWith<$Res>
+    implements $RoutineStepStateCopyWith<$Res> {
   factory _$$_StepStateCopyWith(
           _$_StepState value, $Res Function(_$_StepState) then) =
       __$$_StepStateCopyWithImpl<$Res>;
@@ -87,7 +90,8 @@ abstract class _$$_StepStateCopyWith<$Res> implements $StepStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_StepStateCopyWithImpl<$Res> extends _$StepStateCopyWithImpl<$Res>
+class __$$_StepStateCopyWithImpl<$Res>
+    extends _$RoutineStepStateCopyWithImpl<$Res>
     implements _$$_StepStateCopyWith<$Res> {
   __$$_StepStateCopyWithImpl(
       _$_StepState _value, $Res Function(_$_StepState) _then)
@@ -146,7 +150,7 @@ class _$_StepState implements _StepState {
 
   @override
   String toString() {
-    return 'StepState(name: $name, description: $description, beginAction: $beginAction, timer: $timer)';
+    return 'RoutineStepState(name: $name, description: $description, beginAction: $beginAction, timer: $timer)';
   }
 
   @override
@@ -176,7 +180,7 @@ class _$_StepState implements _StepState {
       __$$_StepStateCopyWithImpl<_$_StepState>(this, _$identity);
 }
 
-abstract class _StepState implements StepState {
+abstract class _StepState implements RoutineStepState {
   const factory _StepState(
       {required final String name,
       final String? description,

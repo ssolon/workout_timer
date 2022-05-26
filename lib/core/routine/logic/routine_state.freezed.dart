@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RoutineState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)
         $default, {
     required TResult Function() initial,
     required TResult Function() loading,
@@ -27,7 +28,8 @@ mixin _$RoutineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -36,7 +38,8 @@ mixin _$RoutineState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -91,7 +94,7 @@ class _$RoutineStateCopyWithImpl<$Res> implements $RoutineStateCopyWith<$Res> {
 abstract class _$$DataCopyWith<$Res> {
   factory _$$DataCopyWith(_$Data value, $Res Function(_$Data) then) =
       __$$DataCopyWithImpl<$Res>;
-  $Res call({String name, String? description, List<StepState> steps});
+  $Res call({String name, String? description, List<RoutineStepState> steps});
 }
 
 /// @nodoc
@@ -121,7 +124,7 @@ class __$$DataCopyWithImpl<$Res> extends _$RoutineStateCopyWithImpl<$Res>
       steps: steps == freezed
           ? _value._steps
           : steps // ignore: cast_nullable_to_non_nullable
-              as List<StepState>,
+              as List<RoutineStepState>,
     ));
   }
 }
@@ -132,16 +135,16 @@ class _$Data implements Data {
   const _$Data(
       {required this.name,
       this.description,
-      required final List<StepState> steps})
+      required final List<RoutineStepState> steps})
       : _steps = steps;
 
   @override
   final String name;
   @override
   final String? description;
-  final List<StepState> _steps;
+  final List<RoutineStepState> _steps;
   @override
-  List<StepState> get steps {
+  List<RoutineStepState> get steps {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_steps);
   }
@@ -177,7 +180,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)
         $default, {
     required TResult Function() initial,
     required TResult Function() loading,
@@ -189,7 +193,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -201,7 +206,8 @@ class _$Data implements Data {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -256,11 +262,11 @@ abstract class Data implements RoutineState {
   const factory Data(
       {required final String name,
       final String? description,
-      required final List<StepState> steps}) = _$Data;
+      required final List<RoutineStepState> steps}) = _$Data;
 
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  List<StepState> get steps => throw _privateConstructorUsedError;
+  List<RoutineStepState> get steps => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$DataCopyWith<_$Data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -303,7 +309,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)
         $default, {
     required TResult Function() initial,
     required TResult Function() loading,
@@ -315,7 +322,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -327,7 +335,8 @@ class _$Initial implements Initial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -420,7 +429,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)
         $default, {
     required TResult Function() initial,
     required TResult Function() loading,
@@ -432,7 +442,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -444,7 +455,8 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -561,7 +573,8 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)
         $default, {
     required TResult Function() initial,
     required TResult Function() loading,
@@ -573,7 +586,8 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
@@ -585,7 +599,8 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String name, String? description, List<StepState> steps)?
+    TResult Function(
+            String name, String? description, List<RoutineStepState> steps)?
         $default, {
     TResult Function()? initial,
     TResult Function()? loading,
