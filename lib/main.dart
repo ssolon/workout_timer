@@ -150,7 +150,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
         child: ListView(children: [
           const DrawerHeader(
             decoration: BoxDecoration(color: Colors.blue),
-            child: Text('Settings',
+            child: Text('Routines',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
