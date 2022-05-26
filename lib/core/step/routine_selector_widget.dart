@@ -10,11 +10,13 @@ class RoutineSelectorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final routines = ref.watch(routinesNotifierProvider);
-    final textStyle = Theme.of(context).textTheme.headlineSmall;
+    final textStyle = Theme.of(context).textTheme.headline6;
 
     // Initialize current
     return routines.maybeWhen(
         (currentRoutine, routineList) => DropdownButton<RoutineState>(
+              isExpanded: true,
+              itemHeight: null,
               onChanged: (value) {
                 ref.read(routinesNotifierProvider.notifier).setCurrent(value);
               },

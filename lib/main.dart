@@ -161,12 +161,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
-                children: [
+                children: const [
                   Expanded(
-                    child: Text('Default',
-                        style: Theme.of(context).textTheme.headlineSmall),
+                    child: RoutineSelectorWidget(),
                   ),
-                  const IconButton(
+                  IconButton(
                     onPressed: null,
                     icon: Icon(Icons.save),
                   ),
