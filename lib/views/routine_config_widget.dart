@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:workout_timer/core/routine/logic/routine_provider.dart';
 
@@ -16,7 +16,22 @@ class RoutineConfigWidget extends ConsumerWidget {
     int stepNumber = 1;
 
     return Column(
-      children: [for (final s in steps) Text("${stepNumber++}. ${s.name}")],
+      children: [
+        for (final s in steps)
+          ExpansionTile(
+              leading: Text("#${stepNumber++}"),
+              title: Text(s.name),
+              subtitle: (s.description != null) ? Text(s.description!) : null,
+              children: [
+                DropdownButton<BeginAction>(
+                    value: s.beginAction,
+                    items: [
+                      for (final i in BeginAction.values)
+                        DropdownMenuItem(value: i, child: Text(i.name))
+                    ],
+                    onChanged: (value) {})
+              ]),
+      ],
     );
   }
 }
