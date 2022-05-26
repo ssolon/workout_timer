@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
-import 'package:workout_timer/core/routine/logic/routine_provider.dart';
-import 'package:workout_timer/core/routine/logic/routine_state.dart';
-import 'package:workout_timer/core/routines/logic/routines_provider.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/views/sound_config.dart';
 

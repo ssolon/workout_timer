@@ -4,7 +4,6 @@ import '../../routine/logic/routine_state.dart';
 
 part 'routines_state.freezed.dart';
 
-/// TODO: Run build_runner command to generate freezed code
 @freezed
 abstract class RoutinesState with _$RoutinesState {
   /// Data is present state

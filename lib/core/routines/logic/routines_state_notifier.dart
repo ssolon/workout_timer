@@ -1,5 +1,4 @@
 part of 'routines_provider.dart';
-// TODO: Implement Routines StateNotifier
 
 /// Defines all the Routines logic the app will use
 class RoutinesNotifier extends StateNotifier<RoutinesState> {
