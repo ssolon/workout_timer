@@ -13,10 +13,13 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> {
       ]),
       RoutineState(name: 'Countdown Stopwatch', steps: [
         RoutineStepState(name: 'Countdown'),
-        RoutineStepState(name: 'StopWatch'),
+        RoutineStepState(
+            name: 'StopWatch', beginAction: BeginAction.beginImmediately),
       ])
     ];
-    state = RoutinesState(routines: routines, current: routines[0]);
+
+    state = const RoutinesState(routines: routines);
+    setCurrent(routines[0]);
   }
 
   RoutineState? get() => state.whenOrNull((current, routines) => current!);
