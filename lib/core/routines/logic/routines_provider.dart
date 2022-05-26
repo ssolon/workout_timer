@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:workout_timer/core/routine/logic/routine_provider.dart';
-import 'package:workout_timer/core/step/logic/step_state.dart';
+import 'package:workout_timer/core/routine_step/logic/routine_step_state.dart';
 
 import '../../routine/logic/routine_state.dart';
 import 'routines_state.dart';

@@ -1,4 +1,4 @@
-part of 'step_provider.dart';
+part of 'routine_step_provider.dart';
 
 /// Defines all the Step logic the app will use
 class StepNotifier extends StateNotifier<RoutineStepState> {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:workout_timer/core/routine/logic/routine_provider.dart';
 
-import '../core/step/logic/step_state.dart';
+import '../core/routine_step/logic/routine_step_state.dart';
 
 class RoutineConfigWidget extends ConsumerWidget {
   const RoutineConfigWidget({super.key});
