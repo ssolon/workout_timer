@@ -5,7 +5,7 @@ part 'routine_state.freezed.dart';
 
 /// Routine consists of a number of steps to be executed.
 @freezed
-abstract class RoutineState with _$RoutineState {
+class RoutineState with _$RoutineState {
   /// Data is present state
   const factory RoutineState({
     required String name,

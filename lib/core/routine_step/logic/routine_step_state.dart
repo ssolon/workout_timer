@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'step_state.freezed.dart';
+part 'routine_step_state.freezed.dart';
 
 enum StepTimer {
   countUp,
@@ -14,7 +14,7 @@ enum BeginAction {
 }
 
 @freezed
-abstract class RoutineStepState with _$RoutineStepState {
+class RoutineStepState with _$RoutineStepState {
   const factory RoutineStepState({
     required String name,
     String? description,

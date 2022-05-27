@@ -5,7 +5,7 @@ import '../../routine/logic/routine_state.dart';
 part 'routines_state.freezed.dart';
 
 @freezed
-abstract class RoutinesState with _$RoutinesState {
+class RoutinesState with _$RoutinesState {
   /// Data is present state
   const factory RoutinesState(
       {RoutineState? current, @Default([]) List<RoutineState> routines}) = Data;
