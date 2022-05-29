@@ -7,8 +7,8 @@ part 'routines_state.freezed.dart';
 @freezed
 class RoutinesState with _$RoutinesState {
   /// Data is present state
-  const factory RoutinesState(
-      {RoutineState? current, @Default([]) List<RoutineState> routines}) = Data;
+  const factory RoutinesState({@Default([]) List<RoutineState> routines}) =
+      Data;
 
   /// Initial/default state
   const factory RoutinesState.initial() = Initial;

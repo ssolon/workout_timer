@@ -8,6 +8,7 @@ part 'routine_state.freezed.dart';
 class RoutineState with _$RoutineState {
   /// Data is present state
   const factory RoutineState({
+    required String id,
     required String name,
     String? description,
     required List<RoutineStepState> steps,

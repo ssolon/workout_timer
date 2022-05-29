@@ -20,5 +20,6 @@ class RoutineStepState with _$RoutineStepState {
     String? description,
     @Default(BeginAction.waitForStartCommand) BeginAction beginAction,
     @Default(StepTimer.countUp) StepTimer timer,
+    @Default(null) Duration? timeTo,
   }) = _StepState;
 }
