@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
+import 'package:workout_timer/core/routines/logic/routines_provider.dart';
 import 'package:workout_timer/core/sound/sound_settings/logic/sound_settings_provider.dart';
 import 'package:workout_timer/views/routine_config_widget.dart';
 import 'package:workout_timer/views/sound_config.dart';
@@ -162,14 +163,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> with UiLoggy {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
-                children: const [
-                  Expanded(
+                children: [
+                  const Expanded(
                     child: RoutineSelectorWidget(),
                   ),
-                  IconButton(
-                    onPressed: null,
-                    icon: Icon(Icons.save),
-                  ),
+                  _SaveRoutinesWidget(),
                 ],
               ),
               const RoutineConfigWidget(),
@@ -284,6 +282,28 @@ class TimerDisplayWidget extends ConsumerWidget with UiLoggy {
       formatDuration(state.current),
       style: counterStyle,
     );
+  }
+}
+
+class _SaveRoutinesWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(routinesNotifierProvider);
+
+    final saveButton = ref.read(routinesNotifierProvider.notifier).dirty
+        ? const IconButton(
+            onPressed: null, // TODO save stuff
+            icon: Icon(Icons.save, color: Colors.red),
+          )
+        : const IconButton(
+            onPressed: null,
+            icon: Icon(
+              Icons.save,
+              color: Colors.grey,
+            ),
+          );
+
+    return saveButton;
   }
 }
 

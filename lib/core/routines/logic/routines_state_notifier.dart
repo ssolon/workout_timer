@@ -3,6 +3,7 @@ part of 'routines_provider.dart';
 /// Defines all the Routines logic the app will use
 class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
   final Ref ref;
+  bool dirty = false;
 
   /// Base constructor expects StateNotifier use_cases to
   /// read its usecases and also defines inital state
@@ -64,6 +65,7 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
     );
 
     if (newState != null) {
+      dirty = true;
       state = newState;
     }
   }
