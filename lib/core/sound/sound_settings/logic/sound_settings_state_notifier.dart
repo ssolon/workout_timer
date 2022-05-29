@@ -8,13 +8,13 @@ class SoundSettingsNotifier extends StateNotifier<SoundSettingsState> {
       : super(const SoundSettingsState(
           enabled: true,
           expanded: true,
-          start: false,
-          stop: false,
-          reset: false,
-          tick: false,
+          start: true,
+          stop: true,
+          reset: true,
+          tick: true,
           tickEvery: SoundEvery.second,
-          beep: false,
-          beepEvery: SoundEvery.minute,
+          beep: true,
+          beepEvery: SoundEvery.tenSeconds,
         ));
 
   /// Return either the current settings state or a default
