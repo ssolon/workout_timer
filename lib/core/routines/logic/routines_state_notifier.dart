@@ -7,8 +7,6 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
   /// Base constructor expects StateNotifier use_cases to
   /// read its usecases and also defines inital state
   RoutinesNotifier(this.ref, RoutinesState starting) : super(starting) {
-    loggy.debug("CTOR");
-
     ref.listen(routinesInitialRoutineIdProvider, fireImmediately: true,
         (String? oldId, String? newId) {
       setCurrent(newId);
@@ -17,7 +15,6 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
     // Update our state when the current routine is changed
     ref.listen(routineNotifierProvider,
         (RoutineState? oldRoutine, RoutineState newRoutine) {
-      loggy.debug("Routine change $oldRoutine -> $newRoutine");
       updateRoutine(newRoutine);
     });
   }

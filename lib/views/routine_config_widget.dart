@@ -23,6 +23,7 @@ class RoutineConfigWidget extends ConsumerWidget with UiLoggy {
               leading: Text("#${++stepNumber}"),
               title: Text(s.name),
               subtitle: (s.description != null) ? Text(s.description!) : null,
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DropdownButton<BeginAction>(
                     value: s.beginAction,
@@ -52,7 +53,25 @@ class RoutineConfigWidget extends ConsumerWidget with UiLoggy {
                         for (final i in StepTimer.values)
                           DropdownMenuItem(value: i, child: Text(i.name)),
                       ],
-                    )
+                    ),
+                    Visibility(
+                      visible: [StepTimer.countDownFrom, StepTimer.countUpTo]
+                          .contains(s.timer),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () => loggy.debug("!!!! Duration tap"),
+                          child: Text(
+                              textAlign: TextAlign.end,
+                              textScaleFactor: 1.25,
+                              (s.timeTo ?? const Duration())
+                                  .toString()
+                                  .split('.')
+                                  .first
+                                  .padLeft(8, "0")),
+                        ),
+                      ),
+                    ),
                   ],
                 )
               ]),

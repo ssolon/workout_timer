@@ -27,9 +27,15 @@ final routinesLoaderProvider = Provider<RoutinesState>((ref) {
 
   const routine2 =
       RoutineState(id: 'test2', name: 'Countdown Stopwatch', steps: [
-    RoutineStepState(name: 'Countdown'),
     RoutineStepState(
-        name: 'StopWatch', beginAction: BeginAction.beginImmediately),
+      name: 'Countdown',
+      timer: StepTimer.countDownFrom,
+      timeTo: Duration(seconds: 5),
+    ),
+    RoutineStepState(
+      name: 'StopWatch',
+      beginAction: BeginAction.beginImmediately,
+    ),
   ]);
 
   return const RoutinesState(routines: [routine1, routine2]);
