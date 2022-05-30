@@ -27,6 +27,7 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
     }
   }
 
+  /// Find a routine, if any, by [routineId]
   RoutineState? routineById(String? routineId) {
     return routineId == null
         ? null
@@ -34,7 +35,19 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
             (element) => element.mapOrNull((value) => value.id) == routineId));
   }
 
+  /// Return true if [checkRoutine] has changed (or is new)
+  bool routineChanged(RoutineState checkRoutine) {
+    final currentRoutine = routineById(idOf(checkRoutine));
+    return currentRoutine == null || currentRoutine != checkRoutine;
+  }
+
+  /// Update, or add, [updatedRoutine] if it's new or has changed
   void updateRoutine(RoutineState updatedRoutine) {
+    // Ignore setting routine to unchanged routine
+    if (!routineChanged(updatedRoutine)) {
+      return;
+    }
+
     final updatedId = idOf(updatedRoutine);
     final routines = state.mapOrNull(
           (value) => value.routines,
@@ -44,6 +57,7 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
     final newRoutines = <RoutineState>[];
     bool isNew = true; // If we don't find one
 
+    // Replace with updated if existing
     for (final r in routines) {
       if (idOf(r) == updatedId) {
         newRoutines.add(updatedRoutine);
@@ -53,6 +67,7 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
       }
     }
 
+    // Add if new
     if (isNew) {
       newRoutines.add(updatedRoutine);
     }

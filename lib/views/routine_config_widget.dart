@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loggy/loggy.dart';
 import 'package:workout_timer/core/routine/logic/routine_provider.dart';
+import 'package:workout_timer/views/sound_config.dart';
 
 import '../core/routine_step/logic/routine_step_state.dart';
 
@@ -73,7 +74,8 @@ class RoutineConfigWidget extends ConsumerWidget with UiLoggy {
                       ),
                     ),
                   ],
-                )
+                ),
+                const SoundConfigurationWidget(),
               ]),
       ],
     );
