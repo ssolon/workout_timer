@@ -17,7 +17,7 @@ final routinesNotifierProvider =
 });
 
 /// Repositories Providers
-final routinesInitialRoutineIdProvider = Provider<String>((ref) => 'test2');
+final initialRoutineIdProvider = Provider<String>((ref) => 'test2');
 
 final routinesLoaderProvider = Provider<RoutinesState>((ref) {
   // TODO load from a persistent store - for now static initialization

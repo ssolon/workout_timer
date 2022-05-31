@@ -8,11 +8,6 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
   /// Base constructor expects StateNotifier use_cases to
   /// read its usecases and also defines inital state
   RoutinesNotifier(this.ref, RoutinesState starting) : super(starting) {
-    ref.listen(routinesInitialRoutineIdProvider, fireImmediately: true,
-        (String? oldId, String? newId) {
-      setCurrent(newId);
-    });
-
     // Update our state when the current routine is changed
     ref.listen(routineNotifierProvider,
         (RoutineState? oldRoutine, RoutineState newRoutine) {
@@ -20,11 +15,13 @@ class RoutinesNotifier extends StateNotifier<RoutinesState> with UiLoggy {
     });
   }
 
-  void setCurrent(String? newCurrentId) {
+  /// Set the current routine using [newCurrentId]
+  RoutineState? setCurrent(String? newCurrentId) {
     final newCurrent = routineById(newCurrentId);
     if (newCurrent != null) {
       ref.read(routineNotifierProvider.notifier).setRoutine(newCurrent);
     }
+    return newCurrent;
   }
 
   /// Find a routine, if any, by [routineId]

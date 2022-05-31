@@ -11,6 +11,9 @@ class RoutineSelectorWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final routines = ref.watch(routinesNotifierProvider);
+    final routinesNotifier = ref.read(routinesNotifierProvider.notifier);
+    final routine = ref.watch(routineNotifierProvider);
+    final initialId = ref.read(initialRoutineIdProvider);
     final textStyle = Theme.of(context).textTheme.headline6;
 
     // Initialize current
@@ -20,11 +23,9 @@ class RoutineSelectorWidget extends ConsumerWidget {
               isExpanded: true,
               itemHeight: null,
               onChanged: (value) {
-                ref.read(routinesNotifierProvider.notifier).setCurrent(value);
+                routinesNotifier.setCurrent(value);
               },
-              value: ref
-                  .read(routineNotifierProvider)
-                  .mapOrNull((value) => value.id),
+              value: routine.mapOrNull((value) => value.id) ?? initialId,
               items: [
                 for (final r in routineList) _makeMenuItem(r, textStyle),
               ],
